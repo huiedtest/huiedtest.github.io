@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="{{ url_for('month_view', year=prev_year, month=prev_month) }}"
+       class="btn btn-sm btn-outline-secondary">
+        « <span class="d-none d-sm-inline">Previous Month</span>
+    </a>
+    <h2 class="mb-0 text-center mx-2">{{ month_name }}</h2>
+    <a href="{{ url_for('month_view', year=next_year, month=next_month) }}"
+       class="btn btn-sm btn-outline-secondary">
+        <span class="d-none d-sm-inline">Next Month</span> »
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered calendar-month mb-0">
+        <thead class="table-light">
+            <tr>
+                <th class="text-center">Mon</th>
+                <th class="text-center">Tue</th>
+                <th class="text-center">Wed</th>
+                <th class="text-center">Thu</th>
+                <th class="text-center">Fri</th>
+                <th class="text-center">Sat</th>
+                <th class="text-center">Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in calendar_data %}
+            <tr>
+                {% for day in week %}
+                <td class="{{ 'table-secondary not-month' if day == 0 else '' }}">
+                    {% if day != 0 %}
+                    <div class="day-number {{ 'today' if date(current_year, current_month, day) == today else '' }}" style="min-height: 75px;">
+                        <a href="{{ url_for('day_view', year=current_year, month=current_month, day=day) }}"
+                           class="day-link {{ 'link-light' if date(current_year, current_month, day) == today else 'link-dark' }}"
+                           title="View day {{ day }}">
+                           {{ day }}
+                        </a>
+                    </div>
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

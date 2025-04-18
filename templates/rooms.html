@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="mb-3">Meeting Rooms</h2>
+
+{% if rooms %}
+    <div class="list-group">
+        {% for room in rooms %}
+            <a href="{{ url_for('week_room_view', room_id=room.id) }}" class="list-group-item list-group-item-action">
+                Room {{ room.name }}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning" role="alert">
+        No meeting rooms found in the database.
+    </div>
+{% endif %}
+
+{% endblock %}

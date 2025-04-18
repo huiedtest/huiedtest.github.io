@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+     <a href="{{ url_for('month_view', year=current_date.year, month=current_date.month) }}" class="btn btn-sm btn-outline-secondary me-2 mb-1">
+         « <span class="d-none d-sm-inline">Month View</span>
+     </a>
+     <h2 class="mb-1 text-center mx-auto h4">{{ current_date.strftime('%A, %B %d, %Y') }}</h2>
+      <a href="{{ url_for('booking_form', date=current_date.strftime('%Y-%m-%d')) }}" class="btn btn-sm btn-primary ms-2 mb-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/> </svg>
+          <span class="d-none d-sm-inline">New Booking</span>
+      </a>
+</div>
+<div class="grid-header-row">
+    <div class="time-header-cell"> </div>
+    {% for room in rooms %} <div class="column-header-cell">{{ room.name }}</div> {% endfor %}
+</div>
+<div class="calendar-day-grid">
+    <div class="time-labels-col">
+        {% for hour in range(view_start_hour, view_end_hour) %} <div class="hour-label" style="height: {{ pixels_per_hour }}px;">{{ "%02d:00"|format(hour) }}</div> {% endfor %}
+    </div>
+    <div class="grid-content-area" id="day-grid-scroll-content">
+        {% set total_height = hours_in_view * pixels_per_hour %}
+        {% for room in rooms %}
+        <div class="room-day-column" style="height: {{ total_height }}px;">
+            {% for booking_display in bookings_by_room_display[room.id] %}
+                <div class="booking-entry"
+                     style="top: {{ booking_display.top }}px; height: {{ booking_display.height }}px;"
+                     title="{{ booking_display.title }} by {{ booking_display.user_name }} ({{ booking_display.start_time_str }} - {{ booking_display.end_time_str }}) {{ booking_display.details if booking_display.details else '' }}"
+                     data-edit-url="{{ url_for('booking_form', booking_id=booking_display.id, ref_url=request.path | urlencode ) }}">
+                    <span class="booking-time-display">{{ booking_display.start_time_str }}<span class="booking-end-time"> - {{ booking_display.end_time_str }}</span></span>
+                    <strong class="booking-title">{{ booking_display.title }}</strong>
+                    <small>{{ booking_display.user_name }} {% if booking_display.details %}<span class="details-indicator" title="{{ booking_display.details }}"><br><i>Details...</i></span>{% endif %}</small>
+                </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}<script>document.addEventListener('DOMContentLoaded', function() { const scrollContent = document.getElementById('day-grid-scroll-content'); if (scrollContent) { scrollContent.addEventListener('click', function(event) { const bookingEntry = event.target.closest('.booking-entry'); if (bookingEntry) { const editUrl = bookingEntry.dataset.editUrl; if (editUrl) { window.location.href = editUrl; } } }); } }); </script>{% endblock %}

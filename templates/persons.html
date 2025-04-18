@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h2 class="mb-3">All Users with Bookings</h2>
+
+{% if persons %}
+    <div class="list-group">
+        {% for person_name in persons %}
+            <a href="/user/{{ person_name | urlencode }}/week" class="list-group-item list-group-item-action">
+                {{ person_name }}
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        No users have made any bookings yet.
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+    <a href="{{ url_for('week_user_view', user_name=user_name, year=prev_year, week_num=prev_week) }}" class="btn btn-sm btn-outline-secondary me-2 mb-1"> « <span class="d-none d-sm-inline">Previous</span> </a>
+    <div class="text-center mx-auto mb-1"> <h2 class="mb-0 h5">{{ user_name }}'s Schedule</h2> <h4 class="mb-0 fw-normal h6">{{ week_label }}</h4> </div>
+    <a href="{{ url_for('week_user_view', user_name=user_name, year=next_year, week_num=next_week) }}" class="btn btn-sm btn-outline-secondary ms-2 mb-1"> <span class="d-none d-sm-inline">Next</span> » </a>
+</div>
+<div class="calendar-week-grid">
+    <div class="time-labels-col"> <div class="grid-header-placeholder"> </div> {% for hour in range(view_start_hour, view_end_hour) %} <div class="hour-label" style="height: {{ pixels_per_hour }}px;">{{ "%02d:00"|format(hour) }}</div> {% endfor %} </div>
+    <div class="schedule-area-wrapper">
+        <div class="grid-header-row"> {% for day in days_in_week %} <div class="column-header-cell">{{ day.strftime('%a %d') }}</div> {% endfor %} </div>
+        <div class="grid-content-area" id="week-grid-scroll-content">
+             {% set total_height = hours_in_view * pixels_per_hour %}
+            {% for day in days_in_week %}
+            <div class="user-week-day-column" style="height: {{ total_height }}px;">
+                {% for booking_display in bookings_by_day_display.get(day, []) %}
+                     <div class="booking-entry"
+                         style="top: {{ booking_display.top }}px; height: {{ booking_display.height }}px;"
+                         title="{{ booking_display.title }} in {{ booking_display.room_name }} ({{ booking_display.start_time_str }} - {{ booking_display.end_time_str }}) {{ booking_display.details if booking_display.details else '' }}"
+                         data-edit-url="{{ url_for('booking_form', booking_id=booking_display.id, ref_url=request.path | urlencode ) }}">
+                        <span class="booking-time-display">{{ booking_display.start_time_str }}<span class="booking-end-time"> - {{ booking_display.end_time_str }}</span></span>
+                        <strong class="booking-title">{{ booking_display.title }}</strong>
+                        <small><span class="prefix-label">Room:</span> {{ booking_display.room_name }} {% if booking_display.details %}<span class="details-indicator" title="{{ booking_display.details }}"><br><i>Details...</i></span>{% endif %}</small>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}<script>document.addEventListener('DOMContentLoaded', function() { const gridContainer = document.querySelector('.calendar-week-grid'); if (gridContainer) { gridContainer.addEventListener('click', function(event) { const bookingEntry = event.target.closest('.booking-entry'); if (bookingEntry) { const editUrl = bookingEntry.dataset.editUrl; if (editUrl) { window.location.href = editUrl; } } }); } }); </script>{% endblock %}
