@@ -116,24 +116,13 @@ body {
     background-color: #f8f9fa;
     position: sticky;
     z-index: 30;
-}
-.calendar-day-grid + .grid-header-row,
-.grid-header-row:has(+ .calendar-day-grid) {
-    top: 56px;
-}
-.schedule-area-wrapper > .grid-header-row {
     top: 0;
-    /* removed min-width: max-content */
+    width: max-content;
 }
 
-.grid-header-row > .time-header-cell {
-    flex: 0 0 60px;
-    border-right: 1px solid #dee2e6;
-    background-color: #f8f9fa;
-}
 
 .grid-header-row .column-header-cell {
-    flex: 1 0 auto;
+    flex: 0 0 auto;
     min-width: 120px;
     border-right: 1px solid #e9ecef;
     font-weight: bold;
@@ -147,9 +136,7 @@ body {
     align-items: center;
     justify-content: center;
 }
-.grid-header-row .column-header-cell:last-child {
-    border-right: none;
-}
+/* Removed :last-child border rule */
 
 
 .grid-content-area {
@@ -159,34 +146,20 @@ body {
     background-size: 100% 60px;
     background-repeat: repeat-y;
     background-position-y: 0px;
-}
-.calendar-day-grid > .grid-content-area {
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: scroll; /* Force scrollbar track for day view content */
-    min-width: 0;
-}
-.calendar-week-grid .grid-content-area {
-    display: flex;
-    /* removed min-width: max-content */
-    width: 100%;
+    width: max-content;
 }
 
 
 .room-day-column,
 .user-week-day-column,
 .week-room-day-column {
-    flex: 1 0 auto;
+    flex: 0 0 auto;
     min-width: 120px;
     border-right: 1px solid #e9ecef;
     position: relative;
     box-sizing: border-box;
 }
-.room-day-column:last-child,
-.user-week-day-column:last-child,
-.week-room-day-column:last-child {
-    border-right: none;
-}
+/* Removed :last-child border rule */
 
 
 .booking-entry {
@@ -278,9 +251,6 @@ body {
   .time-labels-col {
         flex: 0 0 50px;
     }
-    .grid-header-row > .time-header-cell {
-         flex: 0 0 50px;
-    }
     .room-day-column, .user-week-day-column, .week-room-day-column {
         min-width: 90px;
     }
@@ -310,9 +280,6 @@ body {
     .time-labels-col {
         flex: 0 0 35px;
         font-size: 0.65em;
-    }
-     .grid-header-row > .time-header-cell {
-         flex: 0 0 35px;
     }
     .room-day-column, .user-week-day-column, .week-room-day-column {
         min-width: 75px;
