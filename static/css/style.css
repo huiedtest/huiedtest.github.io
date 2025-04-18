@@ -108,7 +108,6 @@ body {
     flex: 1;
     overflow-x: auto;
     position: relative;
-    min-width: 0;
 }
 
 .grid-header-row {
@@ -163,17 +162,16 @@ body {
 .calendar-day-grid > .grid-content-area {
     flex: 1;
     overflow-x: auto;
-    min-width: 0;
 }
 .calendar-week-grid .grid-content-area {
-    /* Removed width: fit-content */
+    width: fit-content;
 }
 
 
 .room-day-column,
 .user-week-day-column,
 .week-room-day-column {
-    flex: 1; /* Let columns grow to fill space */
+    flex: 1;
     min-width: 120px;
     border-right: 1px solid #e9ecef;
     position: relative;
@@ -312,10 +310,10 @@ body {
          flex: 0 0 35px;
     }
     .room-day-column, .user-week-day-column, .week-room-day-column {
-        min-width: 65px;
+        min-width: 60px;
     }
     .grid-header-row .column-header-cell {
-        min-width: 65px;
+        min-width: 60px;
         font-size: 0.65em;
     }
     .calendar-month td {
