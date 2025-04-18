@@ -80,9 +80,7 @@ body {
      height: 30px;
      border-bottom: 1px solid #dee2e6;
 }
-.calendar-day-grid .time-labels-col {
-     padding-top: 31px;
-}
+/* Removed the day-grid specific padding-top rule */
 
 
 .hour-label {
@@ -107,10 +105,9 @@ body {
 .schedule-area-wrapper {
     flex: 1;
     overflow-x: auto;
-    overflow-y: scroll; /* Force vertical scrollbar track */
+    overflow-y: scroll;
     position: relative;
     min-width: 0;
-    /* scrollbar-gutter: stable; */ /* Alternative, newer property */
 }
 
 .grid-header-row {
@@ -169,7 +166,8 @@ body {
     min-width: 0;
 }
 .calendar-week-grid .grid-content-area {
-    min-width: max-content;
+     display: flex;
+     width: 100%;
 }
 
 
