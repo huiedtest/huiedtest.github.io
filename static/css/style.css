@@ -107,9 +107,10 @@ body {
 .schedule-area-wrapper {
     flex: 1;
     overflow-x: auto;
-    overflow-y: scroll;
+    overflow-y: scroll; /* Force vertical scrollbar track */
     position: relative;
     min-width: 0;
+    /* scrollbar-gutter: stable; */ /* Alternative, newer property */
 }
 
 .grid-header-row {
@@ -126,7 +127,7 @@ body {
 }
 .schedule-area-wrapper > .grid-header-row {
     top: 0;
-    /* removed min-width: max-content */
+    min-width: max-content;
 }
 
 .grid-header-row > .time-header-cell {
@@ -168,11 +169,7 @@ body {
     min-width: 0;
 }
 .calendar-week-grid .grid-content-area {
-     /* removed min-width: max-content */
-     /* Ensure it also behaves as a flex container for its columns */
-     display: flex;
-     width: 100%; /* Try letting it fill wrapper horizontally */
-
+    min-width: max-content;
 }
 
 
