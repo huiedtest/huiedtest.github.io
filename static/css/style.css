@@ -107,7 +107,9 @@ body {
 .schedule-area-wrapper {
     flex: 1;
     overflow-x: auto;
+    overflow-y: scroll;
     position: relative;
+    min-width: 0;
 }
 
 .grid-header-row {
@@ -124,6 +126,7 @@ body {
 }
 .schedule-area-wrapper > .grid-header-row {
     top: 0;
+    /* removed min-width: max-content */
 }
 
 .grid-header-row > .time-header-cell {
@@ -132,7 +135,7 @@ body {
 }
 
 .grid-header-row .column-header-cell {
-    flex: 1;
+    flex: 1 0 auto;
     min-width: 120px;
     border-right: 1px solid #e9ecef;
     font-weight: bold;
@@ -162,16 +165,21 @@ body {
 .calendar-day-grid > .grid-content-area {
     flex: 1;
     overflow-x: auto;
+    min-width: 0;
 }
 .calendar-week-grid .grid-content-area {
-    width: fit-content;
+     /* removed min-width: max-content */
+     /* Ensure it also behaves as a flex container for its columns */
+     display: flex;
+     width: 100%; /* Try letting it fill wrapper horizontally */
+
 }
 
 
 .room-day-column,
 .user-week-day-column,
 .week-room-day-column {
-    flex: 1;
+    flex: 1 0 auto;
     min-width: 120px;
     border-right: 1px solid #e9ecef;
     position: relative;
@@ -310,10 +318,10 @@ body {
          flex: 0 0 35px;
     }
     .room-day-column, .user-week-day-column, .week-room-day-column {
-        min-width: 60px;
+        min-width: 75px;
     }
     .grid-header-row .column-header-cell {
-        min-width: 60px;
+        min-width: 75px;
         font-size: 0.65em;
     }
     .calendar-month td {
@@ -333,7 +341,7 @@ body {
         text-overflow: clip;
         padding-right: 5px;
     }
-    .booking-entry { font-size: 0.65em; }
+    .booking-entry { font-size: 0.7em; }
     .booking-time-display {
         display: none;
     }
