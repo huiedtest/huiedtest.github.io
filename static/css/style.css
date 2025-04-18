@@ -80,7 +80,6 @@ body {
      height: 30px;
      border-bottom: 1px solid #dee2e6;
 }
-/* Removed the day-grid specific padding-top rule */
 
 
 .hour-label {
@@ -119,17 +118,18 @@ body {
     z-index: 30;
 }
 .calendar-day-grid + .grid-header-row,
-.calendar-day-grid > .grid-header-row {
+.grid-header-row:has(+ .calendar-day-grid) {
     top: 56px;
 }
 .schedule-area-wrapper > .grid-header-row {
     top: 0;
-    min-width: max-content;
+    /* removed min-width: max-content */
 }
 
 .grid-header-row > .time-header-cell {
     flex: 0 0 60px;
     border-right: 1px solid #dee2e6;
+    background-color: #f8f9fa;
 }
 
 .grid-header-row .column-header-cell {
@@ -163,11 +163,13 @@ body {
 .calendar-day-grid > .grid-content-area {
     flex: 1;
     overflow-x: auto;
+    overflow-y: scroll; /* Force scrollbar track for day view content */
     min-width: 0;
 }
 .calendar-week-grid .grid-content-area {
-     display: flex;
-     width: 100%;
+    display: flex;
+    /* removed min-width: max-content */
+    width: 100%;
 }
 
 
